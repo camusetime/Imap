@@ -12,10 +12,111 @@ use app\models\ContactForm;
 class SiteController extends Controller
 {
 
-    public function actionSaluda()
+
+    public function actionPrecorreos()
     {
-        $mensaje = "Hola Mundo";
-        return $this->render('saluda',["mensaje"=>$mensaje]);
+        $this->Imap();
+        return $this->render("precorreos");
+    }
+
+    public function Imap()
+    {
+       $hostname = '{imap.gmail.com:993/ssl}';
+
+        $username = 'camilo@usetime.co';
+        $password = 'developerapp';
+         
+        $inbox = imap_open($hostname,$username,$password) or die('Ha fallado la conexión: ' . imap_last_error());
+
+        $emails = imap_search($inbox,'ALL');
+
+        /* Si obtenemos los emails, accedemos uno a uno... */
+
+
+        if($emails) {
+
+
+
+            /* variable de salida */
+
+            $output = '';
+
+
+
+            /* Colocamos los nuevos emails arriba */
+
+            rsort($emails);
+
+
+            /* por cada email... */
+
+            $i=0;
+
+            foreach($emails as $email_number) {
+
+                //var_dump($email_number);exit();
+
+                /* Obtenemos la información específica para este email */
+
+                $overview = imap_fetch_overview($inbox,$email_number,0);
+
+                /*echo "<pre>";
+                echo imap_utf8($overview[0]->subject);
+                echo "</pre>";
+                exit();*/
+
+                $message = imap_fetchbody($inbox,$email_number,2);
+
+                //print_r($overview[0]->subject);
+
+                //exit();
+                
+                if(empty($overview[0]->subject)){
+
+                    $overview[0]->subject = "(sin asunto)";
+                }
+
+                /* Mostramos la información de la cabecera del email */
+
+                
+
+                //$output.= $overview[0]->seen.'<br>';
+
+                $output.= "subject --> ".imap_utf8($overview[0]->subject).'<br>';
+
+                $output.= "from --> ".$overview[0]->from.'<br><br>';
+
+                //$output.= $overview[0]->date.'<br>';
+
+
+
+                /* Mostramos el mensaje del email */
+
+                //$output.= $i.$message.'<br>';
+
+                
+
+                
+
+                $i++;
+
+                //exit();
+
+            }
+
+
+
+            echo $output.'<br>';
+
+        } 
+
+
+
+        /* Cerramos la connexión */
+
+        imap_close($inbox);
+
+        //exit();
     }
 
     public function behaviors()
