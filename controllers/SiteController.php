@@ -8,26 +8,65 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Heads;
 
-
+/**
+ * 
+ * @package default
+ */
 
 class SiteController extends Controller
 {
-    /**
-     * Metodo que conecta con imap mediante libreria Tedivm
-     *
-     * @version 0.1
-     */
 
     public function actionTedivm()
     {
 
     $server = new \Fetch\Server('imap.gmail.com', 993);
-    $server->setAuthentication('camilo@usetime.co', 'developerapp');
+    $server->setAuthentication('camilo@usetime.co', 'xxxxx');
 
     $messages = $server->getOrderedMessages(SORTDATE, 1, 100);
+    $this->register($messages);
+    exit();
 
         return $this->render("tedivm",["messages"=>$messages]);
+    }
+
+
+    public function register($messages)
+    {
+
+        /** @var $message \Fetch\Message */
+        foreach ($messages as $message) {
+        echo "Subject: {$message->getSubject()}"."<br>";
+
+        $model = new Heads;
+
+        $model->subject    = $message->getSubject();
+        $model->from       = $message->from;
+        $model->to         = $message->to;
+        $model->date       = $message->getDate();
+        $model->message_id = null;
+        $model->size       = $message->size;
+        $model->uid        = $message->getUid();
+        $model->msgno      = $message->msgno;
+        $model->recent     = $message->recent;
+        $model->flagged    = $message->flagged;
+        $model->answered   = $message->answered;
+        $model->deleted    = $message->deleted;
+        $model->seen       = $message->seen;
+        $model->draft      = $message->draft;
+
+        if ($model->insert()) {
+        # code...
+        echo "true";
+        }else{
+        
+        echo "false";
+        }
+
+        }
+        
+
     }
 
 
