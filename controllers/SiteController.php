@@ -22,11 +22,12 @@ class SiteController extends Controller
     {
 
     $server = new \Fetch\Server('imap.gmail.com', 993);
-    $server->setAuthentication('camilo@usetime.co', 'xxxxx');
+    $server->setAuthentication('camilo@usetime.co', 'xxxxxx');
 
-    $messages = $server->getOrderedMessages(SORTDATE, 1, 100);
+    // aqui van los parametros que para los correos el ultimo parametro es la cantidad de correos que descargada de imap
+    $messages = $server->getOrderedMessages(SORTDATE, 1, 10);
     $this->register($messages);
-    exit();
+    //exit();
 
         return $this->render("tedivm",["messages"=>$messages]);
     }
@@ -34,35 +35,35 @@ class SiteController extends Controller
 
     public function register($messages)
     {
-
         /** @var $message \Fetch\Message */
         foreach ($messages as $message) {
-        echo "Subject: {$message->getSubject()}"."<br>";
+
+        $result=$message->getOverview();    
 
         $model = new Heads;
 
-        $model->subject    = $message->getSubject();
-        $model->from       = $message->from;
-        $model->to         = $message->to;
-        $model->date       = $message->getDate();
-        $model->message_id = null;
-        $model->size       = $message->size;
-        $model->uid        = $message->getUid();
-        $model->msgno      = $message->msgno;
-        $model->recent     = $message->recent;
-        $model->flagged    = $message->flagged;
-        $model->answered   = $message->answered;
-        $model->deleted    = $message->deleted;
-        $model->seen       = $message->seen;
-        $model->draft      = $message->draft;
+        $model->subject    = $result->subject;
+        $model->from       = $result->from;
+        $model->to         = $result->to;
+        $model->date       = $result->date;
+        $model->message_id = $result->message_id;
+        $model->size       = $result->size;
+        $model->uid        = $result->uid;
+        $model->msgno      = $result->msgno;
+        $model->recent     = $result->recent;
+        $model->flagged    = $result->flagged;
+        $model->answered   = $result->answered;
+        $model->deleted    = $result->deleted;
+        $model->seen       = $result->seen;
+        $model->draft      = $result->draft;
 
-        if ($model->insert()) {
-        # code...
-        echo "true";
-        }else{
-        
-        echo "false";
-        }
+            if ($model->save()) {
+            # code...
+            //echo "true";
+            }else{ 
+            print_r($model->getErrors());       
+            //echo "false";
+            }
 
         }
         
