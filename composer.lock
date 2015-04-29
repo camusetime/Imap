@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6587bda1088decbf8bd8934f5a936c0c",
+    "hash": "61e17b2aadcee5d01471e0c8adf6a1e6",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -60,16 +60,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.1.3",
+            "version": "2.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery.git",
-                "reference": "8f2a9d9272d6ed7f32d3a484740ab342c02541e0"
+                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery/zipball/8f2a9d9272d6ed7f32d3a484740ab342c02541e0",
-                "reference": "8f2a9d9272d6ed7f32d3a484740ab342c02541e0",
+                "url": "https://api.github.com/repos/jquery/jquery/zipball/7751e69b615c6eca6f783a81e292a55725af6b85",
+                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85",
                 "shasum": ""
             },
             "require-dev": {
@@ -84,6 +84,7 @@
                 "bower-asset-ignore": [
                     "**/.*",
                     "build",
+                    "dist/cdn",
                     "speed",
                     "test",
                     "*.md",
@@ -319,6 +320,49 @@
             "time": "2013-11-30 08:25:19"
         },
         {
+            "name": "php-imap/php-imap",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barbushin/php-imap.git",
+                "reference": "4fa65a637cdf098862948575a5dcef1d9ba04529"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barbushin/php-imap/zipball/4fa65a637cdf098862948575a5dcef1d9ba04529",
+                "reference": "4fa65a637cdf098862948575a5dcef1d9ba04529",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PhpImap": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Barbushin",
+                    "email": "barbushin@gmail.com",
+                    "homepage": "http://linkedin.com/in/barbushin"
+                }
+            ],
+            "description": "PHP class to access mailbox by POP3/IMAP/NNTP using IMAP extension",
+            "homepage": "https://github.com/barbushin/php-imap",
+            "keywords": [
+                "imap",
+                "mail",
+                "php"
+            ],
+            "time": "2015-04-20 08:54:04"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.0",
             "source": {
@@ -372,16 +416,16 @@
         },
         {
             "name": "tedivm/fetch",
-            "version": "dev-master",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tedious/Fetch.git",
-                "reference": "6a6d909c179e132cb897165b11527eaae6253b47"
+                "reference": "154a84fdfa0d045c2871dd9f8708362fb9ea4acf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tedious/Fetch/zipball/6a6d909c179e132cb897165b11527eaae6253b47",
-                "reference": "6a6d909c179e132cb897165b11527eaae6253b47",
+                "url": "https://api.github.com/repos/tedious/Fetch/zipball/154a84fdfa0d045c2871dd9f8708362fb9ea4acf",
+                "reference": "154a84fdfa0d045c2871dd9f8708362fb9ea4acf",
                 "shasum": ""
             },
             "require": {
@@ -417,7 +461,7 @@
                 "imap",
                 "pop3"
             ],
-            "time": "2015-03-31 16:57:57"
+            "time": "2015-01-08 03:22:20"
         },
         {
             "name": "yiisoft/yii2",
@@ -952,9 +996,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "tedivm/fetch": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

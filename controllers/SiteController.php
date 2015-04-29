@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Heads;
+use \PhpImap;
 
 /**
  * 
@@ -22,11 +23,12 @@ class SiteController extends Controller
     {
 
     $server = new \Fetch\Server('imap.gmail.com', 993);
-    $server->setAuthentication('camilo@usetime.co', 'xxxxxx');
+    $server->setAuthentication('camilo@usetime.co', 'xxxx');
 
     // aqui van los parametros que para los correos el ultimo parametro es la cantidad de correos que descargada de imap
-    $messages = $server->getOrderedMessages(SORTDATE, 1, 10);
-    $this->register($messages);
+    //$messages = $server->getOrderedMessages(SORTDATE, 1, 100);
+    $messages = $server->getMessages();
+    //$this->register($messages);
     //exit();
 
         return $this->render("tedivm",["messages"=>$messages]);
@@ -159,5 +161,30 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionPhpimap()
+    {
+        //$imap = new PhpImap\Mailbox;
+        $mailbox = new PhpImap\Mailbox('{imap.gmail.com:993/imap/ssl}INBOX', 'camilo@usetime.co', 'developerusetime', __DIR__);
+        $mails = array();
+
+        $mailsIds = $mailbox->searchMailBox('ALL');
+        $mailsIds = array_reverse($mailsIds);
+        if(!$mailsIds) {
+            die('Mailbox is empty');
+        }
+
+        echo "<pre>";
+        var_dump($mailbox->getImapStream());
+        echo "</pre>";
+        exit();
+
+        //$mailId = end($mailsIds);
+        //$mail = $mailbox->sortMails(SORTDATE);
+        $mail = $mailbox->getMailsInfo($mailsIds);
+
+
+        return $this->render('phpimap',["mail"=>$mail]);
     }
 }
